@@ -884,7 +884,17 @@
             letter-spacing: 2px;
         }
         
+        /* Original Media Queries + Mobile Enhancements for iOS/Android */
+        
+        @media (max-width: 992px) {
+            /* Original rule for mid-size screens */
+            .tracking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
+            /* Original rules */
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -892,12 +902,12 @@
             }
             
             .main-content {
-                /* การแก้ไขที่สำคัญสำหรับมือถือ/แท็บเล็ต */
                 margin-left: 0;
                 padding: 1rem;
-                height: auto; /* ยกเลิกความสูงคงที่ 100vh บนมือถือ */
-                min-height: auto;
-                max-width: 100%; /* ยกเลิกการจำกัดความกว้างที่คำนวณจาก 100vw - 280px */
+                /* Mobile enhancements for better layout */
+                height: auto; /* Fix 100vh mobile browser UI issue */
+                min-height: 100vh;
+                max-width: 100vw;
             }
             
             .tracking-container {
@@ -911,13 +921,96 @@
             .exercise-grid {
                 grid-template-columns: 1fr;
             }
-        }
-        
-        @media (max-width: 992px) {
-            .tracking-container {
-                grid-template-columns: 1fr;
+
+            /* Additional enhancements for typography and padding */
+            .content-header, .info-section, .exercise-card, .technique-card, .tracking-section, .comparison-section, .disease-card {
+                padding: 1.2rem;
+                border-radius: 10px;
+            }
+            
+            .content-title {
+                font-size: 1.4rem;
+            }
+            
+            .content-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .nav-pills .nav-link {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
             }
         }
+        
+        @media (max-width: 576px) {
+            /* Specific rules for small phones (iPhone SE, small Androids) */
+
+            .logo-section {
+                padding: 0.8rem;
+            }
+            .logo-container {
+                width: 50px;
+                height: 50px;
+                margin: 0 auto 0.4rem;
+            }
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            .app-title {
+                font-size: 1rem;
+            }
+            .app-subtitle {
+                font-size: 0.7rem;
+            }
+            
+            /* Collapse two-column grids to one column for small phones */
+            .qr-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .inhaler-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            /* Reduce typography size for better fit */
+            h4, h5 {
+                font-size: 1.1rem;
+            }
+            
+            /* Make instruction list steps smaller */
+            .instruction-item {
+                font-size: 0.8rem;
+            }
+            .step-number {
+                width: 18px;
+                height: 18px;
+                font-size: 0.65rem;
+            }
+
+            /* Further compact button size */
+            .btn-primary {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            /* Ensure small cards are compact */
+            .qr-placeholder-small {
+                padding: 0.5rem;
+                min-height: 70px;
+            }
+            
+            .medication-info-card {
+                padding: 0.5rem;
+            }
+            
+            .table td, .table th {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+        
     </style>
   <style>@view-transition { navigation: auto; }</style>
   </head>
@@ -941,462 +1034,495 @@
       <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#knowledge"> <i class="nav-icon bi bi-book"></i> รู้จักโรคหืด/ปอดอุดกั้นเรื้อรัง </a></li>
       <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#technique"> <i class="nav-icon bi bi-lungs"></i> เทคนิคการใช้ยาพ่น </a></li>
       <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tracking"> <i class="nav-icon bi bi-clipboard-data"></i> การบันทึกและประเมินการใช้ยาสูดพ่น </a></li>
-      <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#about"> <i class="nav-icon bi bi-info-circle"></i> เกี่ยวกับ HOB by NPR </a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#about"> <i class="nav-icon bi bi-info-circle"></i> เกี่ยวกับ </a></li>
      </ul>
-    </div><div class="main-content">
-     <div class="tab-content"><div class="tab-pane fade show active" id="knowledge">
-       <div class="content-header">
-        <h1 class="content-title">ข้อมูลเกี่ยวกับโรคหอบหืดและปอดอุดกั้นเรื้อรัง</h1>
-        <p class="content-subtitle">ความรู้เบื้องต้นและการเปรียบเทียบอาการของทั้งสองโรค</p>
+    </div><div class="main-content tab-content" id="v-pills-tabContent"><div class="tab-pane fade show active" id="knowledge" role="tabpanel" tabindex="0">
+      <div class="content-header">
+       <h1 class="content-title">รู้จักโรคหืดและปอดอุดกั้นเรื้อรัง (Asthma & COPD)</h1>
+       <p class="content-subtitle">ข้อมูลสำคัญเกี่ยวกับอาการ สาเหตุ และความแตกต่างของโรค</p>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <div class="disease-card asthma-card">
+         <div class="disease-header"><i class="bi bi-lungs text-danger me-2"></i>
+          <h5 class="fw-bold mb-0">หอบหืด (Asthma)</h5>
+         </div>
+         <div class="disease-content">
+          <h6 class="text-danger fw-bold">คำนิยาม</h6>
+          <p class="small">โรคหืดคือ โรคเรื้อรังของระบบทางเดินหายใจที่เกิดจากการอักเสบของหลอดลม ทำให้หลอดลมตีบแคบและไวต่อสิ่งกระตุ้นมากกว่าปกติ ส่งผลให้มีอาการหายใจลำบาก หายใจมีเสียงหวีด แน่นหน้าอก และอาการไอ</p>
+          <h6 class="text-danger fw-bold">อาการสำคัญ</h6>
+          <ul class="small">
+           <li>หายใจเสียงหวีด (Wheezing)</li>
+           <li>ไอแห้ง โดยเฉพาะตอนกลางคืน</li>
+           <li>หายใจลำบาก หายใจสั้น</li>
+           <li>รู้สึกแน่นหน้าอก</li>
+          </ul>
+          <h6 class="text-danger fw-bold">สิ่งกระตุ้น</h6>
+          <ul class="small mb-0">
+           <li>ฝุ่นละออง ไรฝุ่น</li>
+           <li>ละอองเกสรดอกไม้</li>
+           <li>ควันบุหรี่ กลิ่นแรง</li>
+           <li>อากาศเย็น การออกกำลังกาย</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="disease-card copd-card">
+         <div class="disease-header"><i class="bi bi-lungs text-warning me-2"></i>
+          <h5 class="fw-bold mb-0">ปอดอุดกั้นเรื้อรัง (COPD)</h5>
+         </div>
+         <div class="disease-content">
+          <h6 class="text-warning fw-bold">คำนิยาม</h6>
+          <p class="small">โรคปอดอุดกั้นเรื้อรัง (COPD) คือกลุ่มอาการของโรคปอดที่ทำให้การไหลเวียนของอากาศในปอดถูกจำกัด หายใจลำบาก และเกิดความเสียหายต่อทางเดินหายใจและเนื้อเยื่อปอด</p>
+          <h6 class="text-warning fw-bold">อาการสำคัญ</h6>
+          <ul class="small">
+           <li>ไอเรื้อรัง มีเสมหะ</li>
+           <li>หายใจลำบากเมื่อออกแรง</li>
+           <li>เหนื่อยง่าย อ่อนเพลีย</li>
+           <li>น้ำหนักลด เบื่ออาหาร</li>
+          </ul>
+          <h6 class="text-warning fw-bold">สาเหตุหลัก</h6>
+          <ul class="small mb-0">
+           <li>การสูบบุหรี่ (สาเหตุ 80-90%)</li>
+           <li>มลพิษทางอากาศ</li>
+           <li>ฝุ่นละอองในที่ทำงาน</li>
+           <li>พันธุกรรม</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="comparison-section mt-4">
+       <h5 class="fw-bold text-primary mb-3"><i class="bi bi-arrow-left-right me-2"></i>ความแตกต่างระหว่าง Asthma และ COPD</h5>
+       <div class="table-responsive">
+        <table class="table table-bordered">
+         <thead class="table-primary">
+          <tr>
+           <th>หัวข้อ</th>
+           <th class="text-center">Asthma</th>
+           <th class="text-center">COPD</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td class="fw-bold">อายุที่เริ่มป่วย</td>
+           <td class="text-center">เด็ก-วัยรุ่น</td>
+           <td class="text-center">ผู้ใหญ่ (&gt;40 ปี)</td>
+          </tr>
+          <tr>
+           <td class="fw-bold">ลักษณะอาการ</td>
+           <td class="text-center">เป็นๆ หายๆ</td>
+           <td class="text-center">ค่อยๆ แย่ลง</td>
+          </tr>
+          <tr>
+           <td class="fw-bold">การตอบสนองต่อยา</td>
+           <td class="text-center">ดีมาก</td>
+           <td class="text-center">ปานกลาง</td>
+          </tr>
+          <tr>
+           <td class="fw-bold">การย้อนกลับได้</td>
+           <td class="text-center">ได้</td>
+           <td class="text-center">ไม่ได้</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <div class="content-header">
+       <h2 class="content-title">การออกกำลังการบริหารปอด</h2>
+       <p class="content-subtitle">แบบฝึกหัดเพื่อเสริมสร้างสุขภาพปอดและระบบหายใจ</p>
+      </div>
+      <div class="exercise-grid">
+       <div class="exercise-card">
+        <h4><i class="bi bi-person-arms-up text-warning me-2"></i>การหายใจเข้าด้วยวิธีมณีเวช</h4>
+        <div class="content-description mb-3">
+         <h6 class="fw-bold text-warning">หลักการ</h6>
+         <p class="small">เป็นการหายใจเข้าเต็มปอดเพื่อช่วยให้ปอดขยายตัวได้เต็มที่ และนำอากาศบริสุทธิ์เข้าไปกระตุ้นการทำงานของระบบทางเดินหายใจ</p>
+        </div>
+        <div class="image-placeholder-container">
+         <div class="image-placeholder"><i class="bi bi-camera me-2"></i>
+          <p class="mb-0">ภาพประกอบการทำท่า</p>
+         </div>
+        </div>
+        <div class="benefits-section">
+         <h6 class="fw-bold text-success"><i class="bi bi-star-fill me-2"></i>ประโยชน์</h6>
+         <ul class="small mb-0">
+          <li>เพิ่มความจุของปอด</li>
+          <li>ลดอาการเหนื่อยหอบ</li>
+          <li>ผ่อนคลายกล้ามเนื้อหน้าอก</li>
+         </ul>
+        </div>
+       </div>
+       <div class="exercise-card">
+        <h4><i class="bi bi-person-arms-out text-warning me-2"></i>การหายใจออกด้วยวิธีห่อปาก</h4>
+        <div class="content-description mb-3">
+         <h6 class="fw-bold text-warning">หลักการ</h6>
+         <p class="small">การหายใจออกช้าๆ ผ่านริมฝีปากที่ห่อเข้าหากัน จะช่วยสร้างแรงดันย้อนกลับเล็กน้อยในทางเดินหายใจ ทำให้หลอดลมเปิดนานขึ้น และขับอากาศที่ค้างอยู่ในปอดออกไปได้มากขึ้น</p>
+        </div>
+        <div class="image-placeholder-container">
+         <div class="image-placeholder"><i class="bi bi-camera me-2"></i>
+          <p class="mb-0">ภาพประกอบการทำท่า</p>
+         </div>
+        </div>
+        <div class="benefits-section">
+         <h6 class="fw-bold text-success"><i class="bi bi-star-fill me-2"></i>ประโยชน์</h6>
+         <ul class="small mb-0">
+          <li>ช่วยลดการคั่งค้างของอากาศในปอด</li>
+          <li>ทำให้หายใจได้ง่ายและมีประสิทธิภาพมากขึ้น</li>
+          <li>ช่วยผ่อนคลายและควบคุมการหายใจ</li>
+         </ul>
+        </div>
+       </div>
+       <div class="exercise-card">
+        <h4><i class="bi bi-person-fill-gear text-warning me-2"></i>การฝึกบริหารกล้ามเนื้อช่วงไหล่และหลัง</h4>
+        <div class="content-description mb-3">
+         <h6 class="fw-bold text-warning">หลักการ</h6>
+         <p class="small">กล้ามเนื้อช่วงไหล่และหลังมีส่วนสำคัญในการช่วยหายใจ การบริหารจะช่วยให้กล้ามเนื้อเหล่านี้แข็งแรงและยืดหยุ่น ลดภาระของปอดในการทำงาน</p>
+        </div>
+        <div class="exercise-description">
+         <h6 class="fw-bold text-primary mb-2">ขั้นตอน</h6>
+         <div class="instruction-list">
+          <div class="instruction-item"><span class="step-number">1</span> <span>ยืนหรือนั่งหลังตรง ผ่อนคลายไหล่</span> </div>
+          <div class="instruction-item"><span class="step-number">2</span> <span>หมุนไหล่ไปข้างหลัง 5 ครั้ง หายใจสม่ำเสมอ</span> </div>
+          <div class="instruction-item"><span class="step-number">3</span> <span>ยกไหล่ขึ้น กดลง ผ่อนคลายกล้ามเนื้อสะบัก</span> </div>
+         </div>
+         <div class="alert alert-info small mt-3 mb-0"><i class="bi bi-shield-check me-2"></i><strong>ข้อควรระวัง:</strong> ไม่ควรทำแรงเกินไป หยุดหากมีอาการเจ็บ </div>
+        </div>
+       </div>
+      </div>
+     </div><div class="tab-pane fade" id="technique">
+      <div class="content-header">
+       <h1 class="content-title">เทคนิคการใช้ยาพ่น</h1>
+       <p class="content-subtitle">คู่มือการใช้ยาสูดพ่นอย่างถูกต้องและมีประสิทธิภาพ</p>
+      </div><div class="row mb-4">
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code MDI</h6>
+         <div class="qr-placeholder-small"><img src="./images/MDI.png" alt="QR Code วิดีโอสาธิต MDI" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #3b82f6;"></i>
+          </div><small>วิดีโอสาธิต MDI</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="technique-card">
+         <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น MDI</h6>
+         <div class="inhaler-placeholder-medium"><img src="./images/MDI_pic.jpg" alt="ยาพ่น MDI" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;">
+          <div style="display: none;"><i class="bi bi-lungs" style="font-size: 3rem; color: #3b82f6;"></i>
+          </div><strong>MDI (Metered Dose Inhaler)</strong>
+          <small>ยาพ่นแรงดัน</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา MDI</h6>
+         <div class="medication-info-card">
+          <h6>MDI</h6><small>ยาพ่นแรงดัน<br> ใช้ร่วมกับ Spacer<br> กดพร้อมสูดช้าๆ</small>
+         </div>
+        </div>
+       </div>
+      </div><div class="row mb-4">
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code Accuhaler</h6>
+         <div class="qr-placeholder-small"><img src="./images/accuhaler.png" alt="QR Code วิดีโอสาธิต Accuhaler" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #10b981;"></i>
+          </div><small>วิดีโอสาธิต Accuhaler</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="technique-card">
+         <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น Accuhaler</h6>
+         <div class="inhaler-placeholder-medium"><img src="./images/pic_accuhaler.jfif" alt="ยาพ่น Accuhaler" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-lungs" style="font-size: 3rem; color: #10b981;"></i>
+          </div><strong>Accuhaler</strong>
+          <small>ยาผงแห้ง</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา Accuhaler</h6>
+         <div class="medication-info-card">
+          <h6>Accuhaler</h6><small>ยาผงแห้ง<br> เลื่อนตัวเปิด<br> สูดแรงและลึก</small>
+         </div>
+        </div>
+       </div>
+      </div><div class="row mb-4">
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code Spiromax</h6>
+         <div class="qr-placeholder-small"><img src="./images/Spiromax.png" alt="QR Code วิดีโอสาธิต Spiromax" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #f59e0b;"></i>
+          </div><small>วิดีโอสาธิต Spiromax</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="technique-card">
+         <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น Spiromax</h6>
+         <div class="inhaler-placeholder-medium"><img src="./images/pic_spiromax.jfif" alt="ยาพ่น Spiromax" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-droplet" style="font-size: 3rem; color: #f59e0b;"></i>
+          </div><strong>Spiromax</strong>
+          <small>ยาผงแห้ง</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา Spiromax</h6>
+         <div class="medication-info-card">
+          <h6>Spiromax</h6><small>ยาผงแห้ง<br> บิดเปิด-ปิด<br> สูดแรงและลึก</small>
+         </div>
+        </div>
+       </div>
+      </div><div class="row mb-4">
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code HandiHaler</h6>
+         <div class="qr-placeholder-small"><img src="./images/Handihaler.png" alt="QR Code วิดีโอสาธิต HandiHaler" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #f59e0b;"></i>
+          </div><small>วิดีโอสาธิต HandiHaler</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="technique-card">
+         <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น HandiHaler</h6>
+         <div class="inhaler-placeholder-medium"><img src="./images/pic_handihaler.jfif" alt="ยาพ่น HandiHaler" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none;"><i class="bi bi-droplet" style="font-size: 3rem; color: #f59e0b;"></i>
+          </div><strong>HandiHaler</strong>
+          <small>แคปซูลเจาะ</small>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="technique-card">
+         <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา HandiHaler</h6>
+         <div class="medication-info-card">
+          <h6>HandiHaler</h6><small>แคปซูลเจาะ<br> ใช้ HandiHaler<br> เจาะแคปซูลก่อนสูด</small>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="content-header">
+       <h2 class="content-title">วิธีการใช้ยาพ่นแต่ละประเภท</h2>
+       <p class="content-subtitle">คำแนะนำการใช้งานอย่างละเอียดสำหรับยาพ่นทุกชนิด</p>
+      </div>
+      <div class="technique-grid">
+       <div class="technique-card">
+        <h5><i class="bi bi-capsule text-primary me-2"></i>MDI (Metered Dose Inhaler)</h5>
+        <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิดกระบอก MDI</strong><br> 1. เขย่ากระบอกยา 4–5 ครั้ง<br> 2. หายใจออกให้สุด<br> 3. ครอบปากกระบอกพ่นให้สนิท<br> 4. กดพ่นยา สูดหายใจเข้าช้าๆ ลึกๆ<br> 5. กลั้นหายใจประมาณ 10 วินาที<br> 6. หากต้องพ่นซ้ำ ระยะห่างอย่างน้อย 30 วินาที – 1 นาที<br> 7. อาจใช้ spacer (กระบอกพ่นยา) เพื่อให้ยาเข้าสู่ปอดได้ดียิ่งขึ้น<br>
+        </div>
+       </div>
+       <div class="technique-card">
+        <h5><i class="bi bi-disc text-success me-2"></i>Accuhaler</h5>
+        <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด Accuhaler</strong><br> 1. ถือเครื่องในแนวราบขนานกับพื้น<br> 2. เปิดเครื่องใช้นิ้วหัวแม่มือวางลงที่ร่อง ดันนิ้วหัวแม่มือในทิศทางออกจากตัวจนได้ยินเสียงคลิก<br> 3. หายใจออกให้สุด<br> 4. ครอบปากกระบอกพ่นให้สนิท<br> 5. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 6. กลั้นหายใจประมาณ 10 วินาที<br> 7. หากต้องพ่นซ้ำ ระยะห่างอย่างน้อย 30 วินาที – 1 นาที<br> 8. ปิดเครื่องโดยใช้นิ้วหัวแม่มือดันเข้าหาตัวจนได้ยินเสียงคลิก<br>
+        </div>
+       </div>
+       <div class="technique-card">
+        <h5><i class="bi bi-arrow-repeat text-warning me-2"></i>Spiromax</h5>
+        <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด Spiromax</strong><br> 1. บิดฝาครอบด้านบนโดยบิดไปทางซ้ายสุดและบิดกลับทางขวาสุด<br> 2. เครื่องจะพร้อมใช้เมื่อมีเสียงคลิก 1 ครั้ง<br> 3. หายใจออกให้สุด<br> 4. ครอบปากกระบอกพ่นให้สนิท<br> 5. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 6. กลั้นหายใจประมาณ 10 วินาที<br> 7. หากต้องพ่นซ้ำ ให้ทำขั้นตอนที่ 1-6 ซ้ำ<br> 8. ปิดฝาโดยบิดให้ฝาครอบอยู่ตรงกับตัวเครื่อง<br>
+        </div>
+       </div>
+       <div class="technique-card">
+        <h5><i class="bi bi-gem text-info me-2"></i>HandiHaler</h5>
+        <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด HandiHaler (แคปซูล)</strong><br> 1. เปิดฝาครอบออก<br> 2. เปิดปากกระบอกพ่น<br> 3. ใส่แคปซูลยาในช่อง<br> 4. กดปุ่มเจาะแคปซูล 1 ครั้ง<br> 5. หายใจออกให้สุด<br> 6. ครอบปากกระบอกพ่นให้สนิท<br> 7. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 8. กลั้นหายใจประมาณ 10 วินาที<br> 9. หากต้องการพ่นซ้ำ สามารถพ่นได้อีก 1-2 ครั้ง<br> 10. ทิ้งแคปซูลที่ใช้แล้ว ปิดเครื่อง<br>
+        </div>
+       </div>
+      </div>
+     </div><div class="tab-pane fade" id="tracking">
+      <div class="content-header">
+       <h1 class="content-title">การติดตามการรักษา</h1>
+       <p class="content-subtitle">บันทึกการใช้ยาและประเมินระดับการควบคุมอาการ</p>
+      </div>
+      <div class="info-section">
+       <h4><i class="bi bi-person-circle text-primary me-2"></i>ข้อมูลผู้ป่วย</h4>
+       <div class="row">
+        <div class="col-md-6 mb-3">
+         <label for="patient-name" class="form-label small">ชื่อ</label>
+         <input type="text" class="form-control" id="patient-name" placeholder="กรอกชื่อ">
+        </div>
+        <div class="col-md-6 mb-3">
+         <label for="patient-surname" class="form-label small">นามสกุล</label>
+         <input type="text" class="form-control" id="patient-surname" placeholder="กรอกนามสกุล">
+        </div>
        </div>
        <div class="row">
-        <div class="col-md-6">
-         <div class="disease-card asthma-card">
-          <div class="disease-header"><i class="bi bi-lungs text-danger me-2"></i>
-           <h5 class="fw-bold mb-0">
-            หอบหืด (Asthma)
-           </h5>
-          </div>
-          <div class="disease-content">
-           <h6 class="text-danger fw-bold">คำนิยาม</h6>
-           <p class="small">
-            โรคหืดคือ โรคเรื้อรังของระบบทางเดินหายใจที่เกิดจากการอักเสบของหลอดลม ทำให้หลอดลมตีบแคบและไวต่อสิ่งกระตุ้นมากกว่าปกติ ส่งผลให้มีอาการหายใจลำบาก หายใจมีเสียงหวีด แน่นหน้าอก และอาการไอ
-           </p>
-           <h6 class="text-danger fw-bold">อาการสำคัญ</h6>
-           <ul class="small">
-            <li>หายใจเสียงหวีด (Wheezing)</li>
-            <li>ไอแห้ง โดยเฉพาะตอนกลางคืน</li>
-            <li>หายใจลำบาก หายใจสั้น</li>
-            <li>รู้สึกแน่นหน้าอก</li>
-           </ul>
-           <h6 class="text-danger fw-bold">สิ่งกระตุ้น</h6>
-           <ul class="small mb-0">
-            <li>ฝุ่นละออง ไรฝุ่น</li>
-            <li>ละอองเกสรดอกไม้</li>
-            <li>ควันบุหรี่ กลิ่นแรง</li>
-            <li>อากาศเย็น การออกกำลังกาย</li>
-           </ul>
-          </div>
-         </div>
+        <div class="col-md-6 mb-3">
+         <label for="medication-name" class="form-label small">ชื่อยาควบคุมอาการ</label>
+         <input type="text" class="form-control" id="medication-name" placeholder="เช่น Seretide, Symbicort">
         </div>
-        <div class="col-md-6">
-         <div class="disease-card copd-card">
-          <div class="disease-header"><i class="bi bi-lungs text-warning me-2"></i>
-           <h5 class="fw-bold mb-0">
-            ปอดอุดกั้นเรื้อรัง (COPD)
-           </h5>
-          </div>
-          <div class="disease-content">
-           <h6 class="text-warning fw-bold">คำนิยาม</h6>
-           <p class="small">
-            โรคปอดอุดกั้นเรื้อรัง (COPD) คือกลุ่มอาการของโรคปอดที่ทำให้การไหลเวียนของอากาศในปอดถูกจำกัด หายใจลำบาก และเกิดความเสียหายต่อทางเดินหายใจและเนื้อเยื่อปอด
-           </p>
-           <h6 class="text-warning fw-bold">อาการสำคัญ</h6>
-           <ul class="small">
-            <li>ไอเรื้อรัง มีเสมหะ</li>
-            <li>หายใจลำบากเมื่อออกแรง</li>
-            <li>เหนื่อยง่าย อ่อนเพลีย</li>
-            <li>น้ำหนักลด เบื่ออาหาร</li>
-           </ul>
-           <h6 class="text-warning fw-bold">สาเหตุหลัก</h6>
-           <ul class="small mb-0">
-            <li>การสูบบุหรี่ (สาเหตุ 80-90%)</li>
-            <li>มลพิษทางอากาศ</li>
-            <li>ฝุ่นละอองในที่ทำงาน</li>
-            <li>พันธุกรรม</li>
-           </ul>
-          </div>
-         </div>
+        <div class="col-md-6 mb-3">
+         <label for="inhaler-type" class="form-label small">ชนิดของยาพ่น</label>
+         <select class="form-control" id="inhaler-type">
+          <option value="">เลือกชนิด</option>
+          <option value="MDI">MDI</option>
+          <option value="Accuhaler">Accuhaler</option>
+          <option value="Spiromax">Spiromax</option>
+          <option value="Handihaler">HandiHaler</option>
+          <option value="อื่น ๆ">อื่น ๆ</option>
+         </select>
         </div>
        </div>
-       <div class="comparison-section mt-4">
-        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-arrow-left-right me-2"></i>ความแตกต่างระหว่าง Asthma และ COPD</h5>
-        <div class="table-responsive">
-         <table class="table table-bordered">
-          <thead class="table-primary">
+       <label for="medication-notes" class="form-label small">หมายเหตุ</label>
+       <textarea class="form-control" id="medication-notes" rows="2" placeholder="เพิ่มเติมข้อมูลอื่น ๆ ที่เกี่ยวข้อง"></textarea>
+      </div>
+      <div class="tracking-container"><div class="tracking-section">
+        <h4><i class="bi bi-calendar-check text-success me-2"></i>การติดตามความสม่ำเสมอในการใช้ยา</h4>
+        <p class="text-muted small">บันทึกว่าใช้ยาควบคุมอาการทุกวันในสัปดาห์นี้หรือไม่</p>
+        <div class="table-responsive compliance-table">
+         <table class="table table-bordered table-sm">
+          <thead>
            <tr>
-            <th>หัวข้อ</th>
-            <th class="text-center">Asthma</th>
-            <th class="text-center">COPD</th>
+            <th class="text-center">วัน</th>
+            <th class="text-center">ใช้ยา</th>
+            <th class="text-center">ไม่ได้ใช้</th>
            </tr>
           </thead>
           <tbody>
            <tr>
-            <td class="fw-bold">อายุที่เริ่มป่วย</td>
-            <td class="text-center">เด็ก-วัยรุ่น</td>
-            <td class="text-center">ผู้ใหญ่ (&gt;40 ปี)</td>
+            <td class="fw-bold">จันทร์</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="monday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="monday" value="false" onchange="updateCompliance()"></td>
            </tr>
            <tr>
-            <td class="fw-bold">ลักษณะอาการ</td>
-            <td class="text-center">เป็นๆ หายๆ</td>
-            <td class="text-center">ค่อยๆ แย่ลง</td>
+            <td class="fw-bold">อังคาร</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="tuesday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="tuesday" value="false" onchange="updateCompliance()"></td>
            </tr>
            <tr>
-            <td class="fw-bold">การตอบสนองต่อยา</td>
-            <td class="text-center">ดีมาก</td>
-            <td class="text-center">ปานกลาง</td>
+            <td class="fw-bold">พุธ</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="wednesday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="wednesday" value="false" onchange="updateCompliance()"></td>
            </tr>
            <tr>
-            <td class="fw-bold">การย้อนกลับได้</td>
-            <td class="text-center">ได้</td>
-            <td class="text-center">ไม่ได้</td>
+            <td class="fw-bold">พฤหัสบดี</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="thursday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="thursday" value="false" onchange="updateCompliance()"></td>
+           </tr>
+           <tr>
+            <td class="fw-bold">ศุกร์</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="friday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="friday" value="false" onchange="updateCompliance()"></td>
+           </tr>
+           <tr>
+            <td class="fw-bold">เสาร์</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="saturday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="saturday" value="false" onchange="updateCompliance()"></td>
+           </tr>
+           <tr>
+            <td class="fw-bold">อาทิตย์</td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="sunday" value="true" onchange="updateCompliance()"></td>
+            <td class="text-center"><input class="form-check-input" type="radio" name="sunday" value="false" onchange="updateCompliance()"></td>
            </tr>
           </tbody>
          </table>
         </div>
-       </div>
-       <div class="content-header">
-        <h2 class="content-title">การออกกำลังการบริหารปอด</h2>
-        <p class="content-subtitle">แบบฝึกหัดเพื่อเสริมสร้างสุขภาพปอดและระบบหายใจ</p>
-       </div>
-       <div class="exercise-grid">
-        <div class="exercise-card">
-         <h4><i class="bi bi-person-arms-up text-warning me-2"></i>การหายใจเข้าด้วยวิธีมณีเวช</h4>
-         <div class="content-description mb-3">
-          <h6 class="fw-bold text-primary mb-3">คำแนะนำ:</h6>
-          <div class="image-placeholder-container">
-           <div class="image-placeholder">
-            <i class="bi bi-camera-fill" style="font-size: 2rem;"></i>
-            <p class="mb-0 mt-2 small">ภาพประกอบ/วิดีโอ (อัปโหลดเพิ่ม)</p>
-           </div>
-          </div>
-          <p class="small">
-           เป็นการบริหารปอดที่เน้นการหายใจให้ลึกและผ่อนคลายกล้ามเนื้อ
-          </p>
-          <div class="instruction-list">
-           <div class="instruction-item"><span class="step-number">1</span> <span>นั่งตัวตรง พิงพนักเก้าอี้</span> </div>
-           <div class="instruction-item"><span class="step-number">2</span> <span>หายใจเข้าช้าๆ ทางจมูกให้ท้องป่อง</span> </div>
-           <div class="instruction-item"><span class="step-number">3</span> <span>กลั้นหายใจ 3 วินาที</span> </div>
-           <div class="instruction-item"><span class="step-number">4</span> <span>หายใจออกช้าๆ ทางปาก (ทำปากจู๋) ให้ท้องแฟบ</span> </div>
-           <div class="instruction-item"><span class="step-number">5</span> <span>ทำซ้ำ 10 ครั้ง/ชุด วันละ 3-5 ชุด</span> </div>
-          </div>
-          <div class="benefits-section mt-4">
-           <h6 class="fw-bold text-success mb-2"><i class="bi bi-check-circle-fill me-2"></i>ประโยชน์:</h6>
-           <p class="small mb-0">
-            เพิ่มความสามารถในการแลกเปลี่ยนก๊าซในปอด ช่วยลดอาการหายใจตื้น และเสริมสร้างกล้ามเนื้อกระบังลม
-           </p>
-          </div>
+        <div class="text-center"><button class="btn btn-primary" onclick="saveCompliance()" id="save-compliance-btn" disabled> <i class="bi bi-save me-2"></i>บันทึกข้อมูล </button>
+        </div>
+        <div id="compliance-result" class="result-card d-none">
+         <h5><i class="bi bi-graph-up me-2"></i>ผลการประเมิน</h5>
+         <div id="compliance-details"></div>
+        </div>
+       </div><div class="tracking-section">
+        <h4><i class="bi bi-clipboard-pulse text-success me-2"></i>การประเมินการควบคุมอาการ</h4>
+        <p class="text-muted small">ตอบคำถามตามสภาพจริงในช่วง 4 สัปดาห์ที่ผ่านมา</p>
+        <div class="question-card">
+         <h6>1. มีอาการหอบหืด/หายใจลำบากช่วงเวลากลางวัน (บ่อยกว่า 2 ครั้งต่อสัปดาห์)?</h6>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q1" value="true" onchange="updateControlAssessment()">
+          <label class="form-check-label">มี</label>
+         </div>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q1" value="false" onchange="updateControlAssessment()">
+          <label class="form-check-label">ไม่มี</label>
          </div>
         </div>
-        <div class="exercise-card">
-         <h4><i class="bi bi-person-lines-fill text-warning me-2"></i>การบริหารข้อต่อไหล่</h4>
-         <div class="content-description mb-3">
-          <h6 class="fw-bold text-primary mb-3">คำแนะนำ:</h6>
-          <div class="image-placeholder-container">
-           <div class="image-placeholder">
-            <i class="bi bi-camera-fill" style="font-size: 2rem;"></i>
-            <p class="mb-0 mt-2 small">ภาพประกอบ/วิดีโอ (อัปโหลดเพิ่ม)</p>
-           </div>
-          </div>
-          <p class="small">
-           เป็นการบริหารข้อต่อไหล่และกล้ามเนื้อส่วนบนเพื่อช่วยในการขยายตัวของทรวงอกขณะหายใจ
-          </p>
-          <div class="instruction-list">
-           <div class="instruction-item"><span class="step-number">1</span> <span>นั่งหรือยืนในท่าที่สบาย</span> </div>
-           <div class="instruction-item"><span class="step-number">2</span> <span>หมุนไหล่ไปข้างหลัง 5 ครั้ง หายใจสม่ำเสมอ</span> </div>
-           <div class="instruction-item"><span class="step-number">3</span> <span>ยกไหล่ขึ้น กดลง ผ่อนคลายกล้ามเนื้อสะบัก</span> </div>
-          </div>
-          <div class="alert alert-info small mt-3 mb-0"><i class="bi bi-shield-check me-2"></i><strong>ข้อควรระวัง:</strong> ไม่ควรทำแรงเกินไป หยุดหากมีอาการเจ็บ </div>
+        <div class="question-card">
+         <h6>2. มีอาการตื่นขึ้นมากลางดึกเพราะอาการหอบหืด (เนื่องจากหายใจลำบาก/ไอ)?</h6>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q2" value="true" onchange="updateControlAssessment()">
+          <label class="form-check-label">มี</label>
+         </div>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q2" value="false" onchange="updateControlAssessment()">
+          <label class="form-check-label">ไม่มี</label>
          </div>
         </div>
-       </div>
-      </div><div class="tab-pane fade" id="technique">
-       <div class="content-header">
-        <h1 class="content-title">เทคนิคการใช้ยาพ่น</h1>
-        <p class="content-subtitle">คู่มือการใช้ยาสูดพ่นอย่างถูกต้องและมีประสิทธิภาพ</p>
-       </div><div class="row mb-4">
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code MDI</h6>
-          <div class="qr-placeholder-small"><img src="./images/MDI.png" alt="QR Code วิดีโอสาธิต MDI" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #3b82f6;"></i>
-           </div><small>วิดีโอสาธิต MDI</small>
-          </div>
+        <div class="question-card">
+         <h6>3. มีการใช้ยาพ่นฉุกเฉิน (Reliever Inhaler) บ่อยกว่า 2 ครั้งต่อสัปดาห์หรือไม่?</h6>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q3" value="true" onchange="updateControlAssessment()">
+          <label class="form-check-label">มี</label>
+         </div>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q3" value="false" onchange="updateControlAssessment()">
+          <label class="form-check-label">ไม่มี</label>
          </div>
         </div>
-        <div class="col-md-6">
-         <div class="technique-card">
-          <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น MDI</h6>
-          <div class="inhaler-placeholder-medium"><img src="./images/MDI_pic.jpg" alt="ยาพ่น MDI" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;">
-           <div style="display: none;"><i class="bi bi-lungs" style="font-size: 3rem; color: #3b82f6;"></i>
-           </div><strong>MDI (Metered Dose Inhaler)</strong> <small>ยาพ่นแรงดัน</small>
-          </div>
+        <div class="question-card">
+         <h6>4. อาการหอบหืดมีผลกระทบต่อกิจกรรมในชีวิตประจำวัน (เช่น การเรียน การทำงาน การออกกำลังกาย)?</h6>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q4" value="true" onchange="updateControlAssessment()">
+          <label class="form-check-label">มี</label>
+         </div>
+         <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="symptom_q4" value="false" onchange="updateControlAssessment()">
+          <label class="form-check-label">ไม่มี</label>
          </div>
         </div>
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา MDI</h6>
-          <div class="medication-info-card">
-           <h6>MDI</h6><small>ยาพ่นแรงดัน<br> ใช้ร่วมกับ Spacer<br> กดพร้อมสูดช้าๆ</small>
-          </div>
-         </div>
+        <div class="text-center"><button class="btn btn-primary" onclick="saveControlAssessment()" id="save-control-btn" disabled> <i class="bi bi-save me-2"></i>บันทึกการประเมิน </button>
         </div>
-       </div><div class="row mb-4">
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code Accuhaler</h6>
-          <div class="qr-placeholder-small"><img src="./images/accuhaler.png" alt="QR Code วิดีโอสาธิต Accuhaler" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #10b981;"></i>
-           </div><small>วิดีโอสาธิต Accuhaler</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-6">
-         <div class="technique-card">
-          <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น Accuhaler</h6>
-          <div class="inhaler-placeholder-medium"><img src="./images/pic_accuhaler.jpg" alt="ยาพ่น Accuhaler" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-disc" style="font-size: 3rem; color: #10b981;"></i>
-           </div><strong>Accuhaler</strong> <small>ยาผงแห้ง</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา Accuhaler</h6>
-          <div class="medication-info-card">
-           <h6>Accuhaler</h6><small>ยาผงแห้ง<br> เปิดสไลด์<br> สูดแรงและลึก</small>
-          </div>
-         </div>
-        </div>
-       </div><div class="row mb-4">
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code Spiromax</h6>
-          <div class="qr-placeholder-small"><img src="./images/spiromax.png" alt="QR Code วิดีโอสาธิต Spiromax" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #f59e0b;"></i>
-           </div><small>วิดีโอสาธิต Spiromax</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-6">
-         <div class="technique-card">
-          <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น Spiromax</h6>
-          <div class="inhaler-placeholder-medium"><img src="./images/pic_spiromax.jfif" alt="ยาพ่น Spiromax" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-capsule" style="font-size: 3rem; color: #f59e0b;"></i>
-           </div><strong>Spiromax</strong> <small>ยาผงแห้ง</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา Spiromax</h6>
-          <div class="medication-info-card">
-           <h6>Spiromax</h6><small>ยาผงแห้ง<br> บิดเปิด-ปิด<br> สูดแรงและลึก</small>
-          </div>
-         </div>
-        </div>
-       </div><div class="row mb-4">
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-qr-code text-primary me-2"></i>QR Code HandiHaler</h6>
-          <div class="qr-placeholder-small"><img src="./images/Handihaler.png" alt="QR Code วิดีโอสาธิต HandiHaler" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-qr-code" style="font-size: 2rem; color: #f59e0b;"></i>
-           </div><small>วิดีโอสาธิต HandiHaler</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-6">
-         <div class="technique-card">
-          <h6><i class="bi bi-lungs text-success me-2"></i>ภาพยาพ่น HandiHaler</h6>
-          <div class="inhaler-placeholder-medium"><img src="./images/pic_handihaler.jfif" alt="ยาพ่น HandiHaler" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-           <div style="display: none;"><i class="bi bi-droplet" style="font-size: 3rem; color: #f59e0b;"></i>
-           </div><strong>HandiHaler</strong> <small>แคปซูลเจาะ</small>
-          </div>
-         </div>
-        </div>
-        <div class="col-md-3">
-         <div class="technique-card">
-          <h6><i class="bi bi-clipboard-pulse text-info me-2"></i>ข้อมูลยา HandiHaler</h6>
-          <div class="medication-info-card">
-           <h6>HandiHaler</h6><small>แคปซูลเจาะ<br> ใช้ HandiHaler<br> เจาะแคปซูลก่อนสูด</small>
-          </div>
-         </div>
+        <div id="control-result" class="result-card d-none">
+         <h5><i class="bi bi-graph-up me-2"></i>ผลการประเมินการควบคุมอาการ</h5>
+         <div id="control-details"></div>
         </div>
        </div>
-       <div class="content-header">
-        <h2 class="content-title">วิธีการใช้ยาพ่นแต่ละประเภท</h2>
-        <p class="content-subtitle">คำแนะนำการใช้งานอย่างละเอียดสำหรับยาพ่นทุกชนิด</p>
-       </div>
-       <div class="technique-grid">
-        <div class="technique-card">
-         <h5><i class="bi bi-capsule text-primary me-2"></i>MDI (Metered Dose Inhaler)</h5>
-         <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิดกระบอก MDI</strong><br> 1. เขย่ากระบอกยา 4–5 ครั้ง<br> 2. หายใจออกให้สุด<br> 3. ครอบปากกระบอกพ่นให้สนิท<br> 4. กดพ่นยา สูดหายใจเข้าช้าๆ ลึกๆ<br> 5. กลั้นหายใจประมาณ 10 วินาที<br> 6. หากต้องพ่นซ้ำ ระยะห่างอย่างน้อย 30 วินาที – 1 นาที<br> 7. อาจใช้ spacer (กระบอกพ่นยา) เพื่อให้ยาเข้าสู่ปอดได้ดียิ่งขึ้น<br>
-         </div>
-        </div>
-        <div class="technique-card">
-         <h5><i class="bi bi-disc text-success me-2"></i>Accuhaler</h5>
-         <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด Accuhaler</strong><br> 1. ถือเครื่องในแนวราบขนานกับพื้น<br> 2. เปิดเครื่องใช้นิ้วหัวแม่มือวางลงที่ร่อง ดันนิ้วหัวแม่มือในทิศทางออกจากตัวจนได้ยินเสียงคลิก<br> 3. หายใจออกให้สุด<br> 4. ครอบปากกระบอกพ่นให้สนิท<br> 5. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 6. กลั้นหายใจประมาณ 10 วินาที<br> 7. หากต้องพ่นซ้ำ ระยะห่างอย่างน้อย 30 วินาที – 1 นาที<br> 8. ปิดเครื่องโดยใช้นิ้วหัวแม่มือดันให้เข้าที่จนได้ยินเสียงคลิก
-         </div>
-        </div>
-        <div class="technique-card">
-         <h5><i class="bi bi-capsule-pill text-warning me-2"></i>Spiromax</h5>
-         <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด Spiromax</strong><br> 1. บิดฝาครอบกระบอกพ่นยาออกจากตำแหน่งปิด (Close) ไปยังตำแหน่งเปิด (Open) จนกระทั่งได้ยินเสียง "คลิก"<br> 2. หายใจออกให้สุด<br> 3. ครอบปากกระบอกพ่นให้สนิท<br> 4. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 5. กลั้นหายใจประมาณ 10 วินาที<br> 6. บิดฝาครอบกระบอกพ่นยาจากตำแหน่งเปิด (Open) ไปยังตำแหน่งปิด (Close)
-         </div>
-        </div>
-        <div class="technique-card">
-         <h5><i class="bi bi-capsule text-danger me-2"></i>HandiHaler</h5>
-         <div class="placeholder-content"><strong>📝 วิธีใช้ยาพ่นชนิด HandiHaler</strong><br> 1. เปิดฝาครอบกระบอกพ่นยา<br> 2. เปิดส่วนช่องใส่แคปซูล<br> 3. นำแคปซูลยาใส่ในช่องตรงกลาง<br> 4. ปิดส่วนช่องใส่แคปซูล<br> 5. กดปุ่มเจาะแคปซูล 1 ครั้ง<br> 6. หายใจออกให้สุด<br> 7. ครอบปากกระบอกพ่นให้สนิท<br> 8. สูดยาจากเครื่อง เร็ว แรง ลึก<br> 9. กลั้นหายใจประมาณ 10 วินาที<br> 10. หากต้องพ่นซ้ำ ให้สูดซ้ำโดยไม่ต้องกดเจาะแคปซูลอีก
-         </div>
+      </div>
+     </div><div class="tab-pane fade" id="about">
+      <div class="about-section">
+       <div class="logo-display">
+        <div class="logo-text">
+         HOB
         </div>
        </div>
-      </div><div class="tab-pane fade" id="tracking">
-       <div class="content-header">
-        <h1 class="content-title">การบันทึกและประเมินผล</h1>
-        <p class="content-subtitle">ติดตามความสม่ำเสมอในการใช้ยาและการควบคุมอาการ</p>
-       </div>
-       <div class="info-section">
-        <h4><i class="bi bi-person-circle text-primary me-2"></i>ข้อมูลผู้ป่วย/ยา</h4>
-        <div class="medication-form">
-         <div class="row g-2 mb-3">
-          <div class="col-md-6"><input type="text" id="patient-name" class="form-control" placeholder="ชื่อ (ต้องระบุ)" required></div>
-          <div class="col-md-6"><input type="text" id="patient-surname" class="form-control" placeholder="นามสกุล (ต้องระบุ)" required></div>
-         </div>
-         <div class="row g-2">
-          <div class="col-md-6"><input type="text" id="medication-name" class="form-control" placeholder="ชื่อยา (เช่น Seretide)"></div>
-          <div class="col-md-6"><select id="inhaler-type" class="form-select form-control">
-            <option value="">เลือกชนิดของยาพ่น</option>
-            <option value="MDI">MDI</option>
-            <option value="Accuhaler">Accuhaler</option>
-            <option value="Spiromax">Spiromax</option>
-            <option value="HandiHaler">HandiHaler</option>
-            <option value="Other">อื่นๆ</option>
-           </select></div>
-         </div>
-         <div class="mt-3"><textarea id="medication-notes" class="form-control" placeholder="บันทึกเพิ่มเติม (ถ้ามี)" rows="2"></textarea></div>
+       <h1 class="fw-bold">HOB by NPR</h1>
+       <p class="lead">สร้างโดย เภสัชกรหญิงสุกัลยา ยิดนรดิน</p>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <div class="info-section">
+         <h4><i class="bi bi-bullseye text-primary me-2"></i>วัตถุประสงค์</h4>
+         <ul class="list-unstyled">
+          <li><i class="bi bi-check-circle text-success me-2"></i>ให้ความรู้เกี่ยวกับโรคทางเดินหายใจ</li>
+          <li><i class="bi bi-check-circle text-success me-2"></i>สอนเทคนิคการใช้ยาพ่นที่ถูกต้อง</li>
+          <li><i class="bi bi-check-circle text-success me-2"></i>ติดตามความสม่ำเสมอในการใช้ยา</li>
+          <li><i class="bi bi-check-circle text-success me-2"></i>ประเมินการควบคุมอาการ</li>
+         </ul>
         </div>
        </div>
-       <div class="tracking-container"><div class="tracking-section">
-         <h4><i class="bi bi-calendar-check text-success me-2"></i>ความสม่ำเสมอในการใช้ยา (7 วันล่าสุด)</h4>
-         <p class="text-muted small">บันทึกการใช้ยาป้องกันโรค (Preventer/Controller) ในแต่ละวัน</p>
-         <div class="table-responsive compliance-table">
-          <table class="table table-bordered table-sm">
-           <thead>
-            <tr>
-             <th class="text-center">วัน</th>
-             <th class="text-center">ใช้ยา</th>
-             <th class="text-center">ไม่ได้ใช้</th>
-            </tr>
-           </thead>
-           <tbody>
-            <tr>
-             <td class="fw-bold">จันทร์</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="monday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="monday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">อังคาร</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="tuesday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="tuesday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">พุธ</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="wednesday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="wednesday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">พฤหัสบดี</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="thursday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="thursday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">ศุกร์</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="friday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="friday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">เสาร์</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="saturday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="saturday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-            <tr>
-             <td class="fw-bold">อาทิตย์</td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="sunday" value="true" onchange="updateCompliance()"></td>
-             <td class="text-center"><input class="form-check-input" type="radio" name="sunday" value="false" onchange="updateCompliance()"></td>
-            </tr>
-           </tbody>
-          </table>
-         </div>
-         <div class="text-center"><button class="btn btn-primary" onclick="saveCompliance()" id="save-compliance-btn" disabled> <i class="bi bi-save me-2"></i>บันทึกข้อมูล </button>
-         </div>
-         <div id="compliance-result" class="result-card d-none">
-          <h5><i class="bi bi-graph-up me-2"></i>ผลการประเมิน</h5>
-          <div id="compliance-details"></div>
-         </div>
-        </div><div class="tracking-section">
-         <h4><i class="bi bi-clipboard-pulse text-success me-2"></i>การประเมินการควบคุมอาการ</h4>
-         <p class="text-muted small">ตอบคำถามตามสภาพจริงใน 4 สัปดาห์ล่าสุด (ใช้แบบประเมิน ACT/CAT)</p>
-         <div class="question-card">
-          <h6>1. มีอาการหลอดลมตีบจากโรคหอบหืดใน 4 สัปดาห์หรือไม่?</h6>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q1" value="true"> <label class="form-check-label">มี</label></div>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q1" value="false"> <label class="form-check-label">ไม่มี</label></div>
-         </div>
-         <div class="question-card">
-          <h6>2. ต้องตื่นนอนกลางดึกเนื่องจากอาการหอบหืดหรือไม่?</h6>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q2" value="true"> <label class="form-check-label">ใช่</label></div>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q2" value="false"> <label class="form-check-label">ไม่ใช่</label></div>
-         </div>
-         <div class="question-card">
-          <h6>3. มีการใช้ยาพ่นฉุกเฉิน (Reliever) มากกว่า 2 ครั้ง/สัปดาห์หรือไม่?</h6>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q3" value="true"> <label class="form-check-label">ใช่</label></div>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q3" value="false"> <label class="form-check-label">ไม่ใช่</label></div>
-         </div>
-         <div class="question-card">
-          <h6>4. กิจกรรม/การออกกำลังกายถูกจำกัดด้วยอาการหอบหืดหรือไม่?</h6>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q4" value="true"> <label class="form-check-label">ใช่</label></div>
-          <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="symptom_q4" value="false"> <label class="form-check-label">ไม่ใช่</label></div>
-         </div>
-         <div class="text-center"><button class="btn btn-primary" onclick="saveControlAssessment()" id="save-control-btn"> <i class="bi bi-save me-2"></i>ประเมินผล </button>
-         </div>
-         <div id="control-result" class="result-card d-none">
-          <h5><i class="bi bi-graph-up me-2"></i>ผลการควบคุมอาการ</h5>
-          <div id="control-details"></div>
-         </div>
+       <div class="col-md-6">
+        <div class="info-section">
+         <h4><i class="bi bi-star text-warning me-2"></i>คุณสมบัติเด่น</h4>
+         <ul class="list-unstyled">
+          <li><i class="bi bi-check-circle text-warning me-2"></i>ระบบบันทึกข้อมูลอัตโนมัติ</li>
+          <li><i class="bi bi-check-circle text-warning me-2"></i>การประเมินผลแบบเรียลไทม์</li>
+          <li><i class="bi bi-check-circle text-warning me-2"></i>อินเทอร์เฟซที่ใช้งานง่าย</li>
+          <li><i class="bi bi-check-circle text-warning me-2"></i>เหมาะสำหรับโรงพยาบาลและคลินิก</li>
+         </ul>
         </div>
        </div>
-      </div><div class="tab-pane fade" id="about">
-       <div class="about-section">
-        <div class="logo-display">
-         <div class="logo-text">
-          HOB
-         </div>
-        </div>
-        <h1>HOB by NPR</h1>
-        <p class="lead">ระบบจัดการโรคหอบหืดและปอดอุดกั้นเรื้อรัง</p>
-        <p class="lead">สร้างโดย เภสัชกรหญิงสุกัลยา ยิดนรดิน</p>
-       </div>
-       <div class="row">
-        <div class="col-md-6">
-         <div class="info-section">
-          <h4><i class="bi bi-bullseye text-primary me-2"></i>วัตถุประสงค์</h4>
-          <ul class="list-unstyled">
-           <li><i class="bi bi-check-circle text-success me-2"></i>ให้ความรู้เกี่ยวกับโรคทางเดินหายใจ</li>
-           <li><i class="bi bi-check-circle text-success me-2"></i>สอนเทคนิคการใช้ยาพ่นที่ถูกต้อง</li>
-           <li><i class="bi bi-check-circle text-success me-2"></i>ติดตามความสม่ำเสมอในการใช้ยา</li>
-           <li><i class="bi bi-check-circle text-success me-2"></i>ประเมินการควบคุมอาการ</li>
-          </ul>
-         </div>
-        </div>
-        <div class="col-md-6">
-         <div class="info-section">
-          <h4><i class="bi bi-star text-warning me-2"></i>คุณสมบัติเด่น</h4>
-          <ul class="list-unstyled">
-           <li><i class="bi bi-check-circle text-warning me-2"></i>ระบบบันทึกข้อมูลอัตโนมัติ</li>
-           <li><i class="bi bi-check-circle text-warning me-2"></i>การประเมินผลแบบเรียลไทม์</li>
-           <li><i class="bi bi-check-circle text-warning me-2"></i>อินเทอร์เฟซที่ใช้งานง่าย</li>
-           <li><i class="bi bi-check-circle text-warning me-2"></i>เหมาะสำหรับโรงพยาบาลและคลินิก</li>
-          </ul>
-         </div>
-        </div>
-       </div>
-       <div class="info-section">
-        <h4><i class="bi bi-people text-info me-2"></i>ผู้พัฒนา</h4>
-        <p>
-         พัฒนาโดยเภสัชกรหญิงสุกัลยา ยิดนรดิน เพื่อการดูแลสุขภาพทางเดินหายใจที่ดีขึ้น และเพื่อส่งเสริมการมีส่วนร่วมของผู้ป่วยในการดูแลตนเอง ตามมาตรฐานทางการแพทย์สากล
-        </p>
-        <div class="mt-3 p-3 bg-light rounded">
-         <h5><i class="bi bi-shield-check text-success me-2"></i>กลุ่มงานเภสัชกรรม (Department of Pharmaceutical)</h5>
-         <p class="mb-0">โรงพยาบาลนพรัตนราชธานี (Nopparat Rajathanee Hospital)</p>
-        </div>
+      </div>
+      <div class="info-section">
+       <h4><i class="bi bi-people text-info me-2"></i>ผู้พัฒนา</h4>
+       <p>พัฒนาโดยเภสัชกรหญิงสุกัลยา ยิดนรดิน เพื่อการดูแลสุขภาพทางเดินหายใจที่ดีขึ้น และเพื่อส่งเสริมการมีส่วนร่วมของผู้ป่วยในการดูแลตนเอง ตามมาตรฐานทางการแพทย์สากล</p>
+       <div class="mt-3 p-3 bg-light rounded">
+        <h5><i class="bi bi-shield-check text-success me-2"></i>กลุ่มงานเภสัชกรรม (Department of Pharmaceutical)</h5>
+        <p class="mb-0">โรงพยาบาลนพรัตนราชธานี (Nopparat Rajathanee Hospital)</p>
        </div>
       </div>
      </div>
@@ -1443,53 +1569,52 @@
             window.localStorage.setItem(key, JSON.stringify(list));
             return { isOk: true };
         }
-        
-        // Data handler for SDK
+
+        // Data handler for SDK/Local Storage
         const dataHandler = {
-            onRecordsCount: (count) => {
-                currentRecordCount = count;
+            getRecords: async (type) => {
+                if (window.dataSdk) {
+                    const { records } = await window.dataSdk.getRecords(type);
+                    return records || [];
+                } else {
+                    return getLocalRecords(type + '_records');
+                }
             },
-            onConfig: (config) => {
-                // Apply configuration from SDK if available
-                document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
-                document.getElementById('hospital-name').textContent = config.hospital_name || defaultConfig.hospital_name;
-                // document.getElementById('welcome-message').textContent = config.welcome_message || defaultConfig.welcome_message;
+            createRecord: async (record) => {
+                if (window.dataSdk) {
+                    return await window.dataSdk.create(record);
+                } else {
+                    const local = pushLocalRecord(record.record_type + '_records', record);
+                    if (local.isOk) currentRecordCount++;
+                    return local;
+                }
+            },
+            getSettings: async () => {
+                if (window.dataSdk) {
+                    const settings = await window.dataSdk.getSettings();
+                    return settings || defaultConfig;
+                } else {
+                    return defaultConfig;
+                }
             }
         };
 
-        function initializeApp() {
-            if (window.dataSdk) {
-                window.dataSdk.onReady(() => {
-                    window.dataSdk.getRecordsCount("compliance_records");
-                    window.dataSdk.getRecordsCount("control_assessment_records");
-                    window.dataSdk.getConfig();
-                });
-                
-                window.dataSdk.on("recordsCount", (data) => {
-                    if (data.recordType === "compliance_records" || data.recordType === "control_assessment_records") {
-                        dataHandler.onRecordsCount(data.count);
-                    }
-                });
-
-                window.dataSdk.on("config", (data) => {
-                    dataHandler.onConfig(data.config);
-                });
-
-            } else {
-                // Fallback to local storage count and default config
-                const complianceCount = getLocalRecords('compliance_records').length;
-                const controlCount = getLocalRecords('control_assessment_records').length;
-                currentRecordCount = complianceCount + controlCount;
-                dataHandler.onConfig(defaultConfig);
+        // Initialization function to fetch settings and update UI
+        async function initializeApp() {
+            const settings = await dataHandler.getSettings();
+            document.getElementById('app-title').textContent = settings.app_title || defaultConfig.app_title;
+            document.getElementById('hospital-name').textContent = settings.hospital_name || defaultConfig.hospital_name;
+            
+            // Get current record count for soft limit check (if using local storage)
+            if (!window.dataSdk) {
+                const complianceRecords = getLocalRecords('compliance_records');
+                const controlRecords = getLocalRecords('control_assessment_records');
+                currentRecordCount = complianceRecords.length + controlRecords.length;
             }
         }
-        
-        function showCustomAlert(message) {
-            const existingAlert = document.querySelector('.custom-alert');
-            if (existingAlert) {
-                existingAlert.remove();
-            }
 
+        // Alert function
+        function showCustomAlert(message) {
             const alertHTML = `
                 <div class="custom-alert">
                     <div class="alert-content">
@@ -1505,7 +1630,7 @@
             document.body.insertAdjacentHTML('beforeend', alertHTML);
         }
 
-        // Compliance functions
+        // Compliance Tracking functions
         function updateCompliance() {
             const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
             let filledDays = 0;
@@ -1520,8 +1645,7 @@
             const saveBtn = document.getElementById('save-compliance-btn');
             const patientName = document.getElementById('patient-name').value.trim();
             const patientSurname = document.getElementById('patient-surname').value.trim();
-            
-            // ปุ่มจะเปิดใช้งานเมื่อเลือกครบ 7 วัน และกรอกชื่อ-นามสกุลครบถ้วน
+
             saveBtn.disabled = filledDays < 7 || !patientName || !patientSurname;
         }
 
@@ -1530,14 +1654,15 @@
                 showCustomAlert("ถึงขีดจำกัดการบันทึกข้อมูลแล้ว (999 รายการ) กรุณาลบข้อมูลเก่าก่อนเพิ่มใหม่");
                 return;
             }
-            
+
             const patientName = document.getElementById('patient-name').value.trim();
             const patientSurname = document.getElementById('patient-surname').value.trim();
+
             if (!patientName || !patientSurname) {
                 showCustomAlert("กรุณากรอกชื่อและนามสกุลให้ครบถ้วน");
                 return;
             }
-            
+
             const saveBtn = document.getElementById('save-compliance-btn');
             const originalHTML = saveBtn.innerHTML;
             saveBtn.innerHTML = '<div class="d-flex align-items-center"><div class="loading-spinner me-2"></div>กำลังบันทึก...</div>';
@@ -1566,6 +1691,7 @@
             complianceRecord.compliance_percentage = percentage;
 
             let savedOk = false;
+            
             if (window.dataSdk) {
                 const result = await window.dataSdk.create(complianceRecord);
                 savedOk = !!(result && result.isOk);
@@ -1580,7 +1706,7 @@
             } else {
                 showCustomAlert("เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง");
             }
-            
+
             saveBtn.innerHTML = originalHTML;
             saveBtn.disabled = false;
         }
@@ -1588,11 +1714,10 @@
         function showComplianceResult(percentage, usedDays, patientName, patientSurname) {
             const resultDiv = document.getElementById('compliance-result');
             const detailsDiv = document.getElementById('compliance-details');
-            
             let level, message, className, badgeClass, healthAdvice;
 
             if (percentage > 80) {
-                level = "Good compliance";
+                level = "ควบคุมได้ดี";
                 message = "🟢 ยินดีด้วย! มีความสม่ำเสมอในการใช้ยาในระดับดีเยี่ยม";
                 className = "result-good";
                 badgeClass = "bg-success";
@@ -1600,30 +1725,30 @@
                     <div class="mt-3 p-3 bg-light rounded">
                         <h6><i class="bi bi-heart-pulse text-success me-2"></i>คำแนะนำสุขภาพ</h6>
                         <ul class="mb-0 small">
-                            <li>รักษาระดับความสม่ำเสมอในการใช้ยาต่อไป</li>
-                            <li>หลีกเลี่ยงสิ่งกระตุ้นอย่างต่อเนื่อง</li>
-                            <li>ออกกำลังกายบริหารปอดอย่างสม่ำเสมอ</li>
+                            <li>ใช้ยาตามแผนการรักษาอย่างสม่ำเสมอ</li>
+                            <li>ควบคุมสิ่งกระตุ้นอาการหอบหืด</li>
+                            <li>ออกกำลังกายบริหารปอดสม่ำเสมอ</li>
                         </ul>
                     </div>
                 `;
-            } else if (percentage >= 50) {
-                level = "Medium compliance";
-                message = "🟡 ควรปรับปรุง! ความสม่ำเสมอในการใช้ยาอยู่ในระดับปานกลาง";
+            } else if (percentage >= 50 && percentage <= 80) {
+                level = "ควบคุมได้บ้าง";
+                message = "🟡 ความสม่ำเสมอในการใช้ยาอยู่ในระดับปานกลาง ควรปรับปรุง";
                 className = "result-medium";
                 badgeClass = "bg-warning";
                 healthAdvice = `
                     <div class="mt-3 p-3 bg-light rounded">
                         <h6><i class="bi bi-exclamation-triangle text-warning me-2"></i>คำแนะนำสุขภาพ</h6>
                         <ul class="mb-0 small">
-                            <li>ควรตั้งเวลาเตือนการใช้ยาทุกวัน</li>
-                            <li>ทบทวนเทคนิคการใช้ยาพ่นที่ถูกต้อง</li>
-                            <li>หากไม่แน่ใจควรปรึกษาเภสัชกร/แพทย์</li>
+                            <li>พยายามใช้ยาให้สม่ำเสมอมากขึ้นทุกวัน</li>
+                            <li>ตั้งนาฬิกาเตือนการใช้ยา</li>
+                            <li>พิจารณาปรึกษาแพทย์/เภสัชกร เพื่อทบทวนความสำคัญของการใช้ยา</li>
                         </ul>
                     </div>
                 `;
             } else {
-                level = "Poor compliance";
-                message = "🔴 อันตราย! มีความเสี่ยงสูงจากการใช้ยาไม่สม่ำเสมอ";
+                level = "ควบคุมไม่ได้";
+                message = "🔴 ความสม่ำเสมอในการใช้ยาอยู่ในระดับต่ำมาก ควรแก้ไขอย่างเร่งด่วน";
                 className = "result-poor";
                 badgeClass = "bg-danger";
                 healthAdvice = `
@@ -1658,9 +1783,25 @@
                 </div>
                 ${healthAdvice}
             `;
-            
+
             resultDiv.className = `result-card ${className}`;
             resultDiv.classList.remove('d-none');
+        }
+
+        // Control Assessment functions
+        function updateControlAssessment() {
+            const questions = ['symptom_q1', 'symptom_q2', 'symptom_q3', 'symptom_q4'];
+            let allAnswered = true;
+            questions.forEach(q => {
+                const radios = document.querySelectorAll(`input[name="${q}"]`);
+                const isChecked = Array.from(radios).some(radio => radio.checked);
+                if (!isChecked) {
+                    allAnswered = false;
+                }
+            });
+
+            const saveBtn = document.getElementById('save-control-btn');
+            saveBtn.disabled = !allAnswered;
         }
 
         async function saveControlAssessment() {
@@ -1668,12 +1809,12 @@
                 showCustomAlert("ถึงขีดจำกัดการบันทึกข้อมูลแล้ว (999 รายการ) กรุณาลบข้อมูลเก่าก่อนเพิ่มใหม่");
                 return;
             }
-            
+
             const questions = ['symptom_q1', 'symptom_q2', 'symptom_q3', 'symptom_q4'];
             const answers = {};
             let positiveSymptoms = 0;
             let allAnswered = true;
-            
+
             questions.forEach(q => {
                 const selectedValue = document.querySelector(`input[name="${q}"]:checked`)?.value;
                 if (selectedValue !== undefined) {
@@ -1712,12 +1853,13 @@
                 ...answers,
                 symptom_total: positiveSymptoms,
                 control_level: controlLevel,
-                medication_name: "",
-                inhaler_type: "",
-                notes: ""
+                medication_name: document.getElementById('medication-name')?.value || "",
+                inhaler_type: document.getElementById('inhaler-type')?.value || "",
+                notes: document.getElementById('medication-notes')?.value || ""
             };
 
             let savedOk = false;
+            
             if (window.dataSdk) {
                 const result = await window.dataSdk.create(controlRecord);
                 savedOk = !!(result && result.isOk);
@@ -1728,7 +1870,7 @@
             }
 
             if (savedOk) {
-                showControlResult(positiveSymptoms, controlLevel);
+                showControlResult(controlLevel, positiveSymptoms);
             } else {
                 showCustomAlert("เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง");
             }
@@ -1737,17 +1879,16 @@
             saveBtn.disabled = false;
         }
 
-        function showControlResult(positiveSymptoms, controlLevel) {
+        function showControlResult(controlLevel, positiveSymptoms) {
             const resultDiv = document.getElementById('control-result');
             const detailsDiv = document.getElementById('control-details');
-            
             let message, recommendation, className, badgeClass, detailedAdvice;
             const patientName = document.getElementById('patient-name')?.value || "ไม่ระบุ";
             const patientSurname = document.getElementById('patient-surname')?.value || "";
 
             if (controlLevel === "ควบคุมได้ดี") {
-                message = "🟢 ยอดเยี่ยม! ควบคุมอาการหอบหืด/ปอดอุดกั้นเรื้อรังได้ดี";
-                recommendation = "รักษาระดับการควบคุมอาการนี้ไว้";
+                message = "🟢 ยินดีด้วย! อาการหอบหืด/ปอดอุดกั้นเรื้อรังควบคุมได้ดี";
+                recommendation = "รักษาสุขภาพและปฏิบัติตัวตามแผนการรักษาต่อไป";
                 className = "result-good";
                 badgeClass = "bg-success";
                 detailedAdvice = `
@@ -1757,15 +1898,16 @@
                             <div class="col-md-6">
                                 <h6 class="small fw-bold text-success">การใช้ยา</h6>
                                 <ul class="small mb-2">
-                                    <li>ใช้ยาป้องกันอย่างสม่ำเสมอ</li>
-                                    <li>ทบทวนเทคนิคการใช้ยาพ่น</li>
+                                    <li>ใช้ยาควบคุมอาการทุกวันอย่างสม่ำเสมอ</li>
+                                    <li>ตรวจสอบเทคนิคการใช้ยาพ่นเป็นระยะ</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <h6 class="small fw-bold text-success">การดูแลเพิ่มเติม</h6>
                                 <ul class="small mb-2">
-                                    <li>ออกกำลังกายบริหารปอด</li>
                                     <li>หลีกเลี่ยงสิ่งกระตุ้น</li>
+                                    <li>ออกกำลังกายบริหารปอดสม่ำเสมอ</li>
+                                    <li>เตรียมพร้อมยาฉุกเฉินเสมอ</li>
                                 </ul>
                             </div>
                         </div>
@@ -1806,33 +1948,33 @@
                     </div>
                 `;
             } else {
-                message = "🔴 ไม่สามารถควบคุมอาการได้ มีอาการมากผิดปกติ";
-                recommendation = "จำเป็นต้องปรับเปลี่ยนการรักษาโดยด่วน";
+                message = "🔴 อาการควบคุมไม่ได้ มีความเสี่ยงสูงที่จะเกิดอาการกำเริบ";
+                recommendation = "ต้องปรึกษาแพทย์เพื่อปรับแผนการรักษาอย่างเร่งด่วน";
                 className = "result-poor";
                 badgeClass = "bg-danger";
                 detailedAdvice = `
                     <div class="mt-3 p-3 bg-light rounded">
-                        <h6><i class="bi bi-exclamation-circle text-danger me-2"></i>คำแนะนำการปฏิบัติตัว (เร่งด่วน)</h6>
+                        <h6><i class="bi bi-x-octagon text-danger me-2"></i>คำแนะนำการปฏิบัติตัว (เร่งด่วน)</h6>
                         <div class="row">
                             <div class="col-md-6">
                                 <h6 class="small fw-bold text-danger">การใช้ยา</h6>
                                 <ul class="small mb-2">
-                                    <li><strong>พบแพทย์โดยเร็วที่สุด</strong> เพื่อประเมินอาการและปรับยา</li>
-                                    <li>ตรวจสอบเทคนิคการใช้ยาพ่นให้ถูกต้อง 100%</li>
-                                    <li>ใช้ยาฉุกเฉินตามคำแนะนำอย่างเคร่งครัด</li>
+                                    <li><strong>พบแพทย์โดยเร็วที่สุด</strong> เพื่อประเมินยา</li>
+                                    <li>ทบทวนเทคนิคการใช้ยาพ่นทันที</li>
+                                    <li>ใช้ยาฉุกเฉินเมื่อมีอาการเท่านั้น</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <h6 class="small fw-bold text-danger">การดูแลเพิ่มเติม</h6>
                                 <ul class="small mb-2">
-                                    <li>หลีกเลี่ยงสิ่งกระตุ้นทุกชนิดอย่างเข้มงวด</li>
-                                    <li>เฝ้าระวังอาการแย่ลงอย่างใกล้ชิด</li>
-                                    <li>ควรมีแผนปฏิบัติการเมื่ออาการกำเริบ</li>
+                                    <li>หลีกเลี่ยงสิ่งกระตุ้นอย่างเข้มงวด</li>
+                                    <li>ติดตามอาการอย่างใกล้ชิด</li>
+                                    <li>เตรียมยาฉุกเฉินให้พร้อมและรู้วิธีใช้</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="alert alert-danger small mb-0">
-                            <i class="bi bi-person-exclamation me-2"></i><strong>การติดตาม:</strong> นัดพบแพทย์ภายใน 1 สัปดาห์ เพื่อปรับแผนการรักษา
+                            <i class="bi bi-hospital me-2"></i><strong>การติดตาม:</strong> ควรได้รับการประเมินจากแพทย์/พยาบาล/เภสัชกร ในเร็ววัน
                         </div>
                     </div>
                 `;
@@ -1842,11 +1984,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>ผู้ป่วย:</strong> ${patientName} ${patientSurname}</p>
-                        <p><strong>จำนวนอาการ:</strong> ${positiveSymptoms}/4 ข้อ</p>
+                        <p><strong>จำนวนอาการ:</strong> ${positiveSymptoms} ข้อ</p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>ระดับการควบคุม:</strong> <span class="badge ${badgeClass} fs-6">${controlLevel}</span></p>
-                        <p><strong>ข้อเสนอแนะ:</strong> <span class="fw-bold">${recommendation}</span></p>
+                        <p><strong>ระดับ:</strong> <span class="badge ${badgeClass} fs-6">${controlLevel}</span></p>
+                        <p><strong>คำแนะนำ:</strong> <span class="fw-bold">${recommendation}</span></p>
                     </div>
                 </div>
                 <div class="alert alert-info mt-2 mb-0">
@@ -1854,15 +1996,16 @@
                 </div>
                 ${detailedAdvice}
             `;
-            
+
             resultDiv.className = `result-card ${className}`;
             resultDiv.classList.remove('d-none');
         }
 
-        // Add event listeners for patient name fields
+        // Add event listeners for patient name fields and assessment changes
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
             
+            // Compliance section listeners
             const patientNameField = document.getElementById('patient-name');
             const patientSurnameField = document.getElementById('patient-surname');
             
@@ -1873,24 +2016,16 @@
                 patientSurnameField.addEventListener('input', updateCompliance);
             }
             
-            // Add event listeners for compliance radio buttons
-            const complianceRadioButtons = document.querySelectorAll('#tracking-section-compliance input[type="radio"]');
+            const complianceRadioButtons = document.querySelectorAll('#tracking input[type="radio"][name^="monday"], #tracking input[type="radio"][name^="tuesday"], #tracking input[type="radio"][name^="wednesday"], #tracking input[type="radio"][name^="thursday"], #tracking input[type="radio"][name^="friday"], #tracking input[type="radio"][name^="saturday"], #tracking input[type="radio"][name^="sunday"]');
             complianceRadioButtons.forEach(radio => {
                 radio.addEventListener('change', updateCompliance);
             });
-            
-            // Re-initialize all radio buttons that might be hidden or dynamically loaded
-            const allRadioButtons = document.querySelectorAll('input[type="radio"]');
-            allRadioButtons.forEach(radio => {
-                // Ensure updateCompliance is only for compliance section
-                if (radio.name.startsWith('symptom_q')) {
-                    // Do nothing for symptom questions as they don't block the save button
-                } else if (radio.name === 'monday' || radio.name === 'tuesday' || radio.name === 'wednesday' || radio.name === 'thursday' || radio.name === 'friday' || radio.name === 'saturday' || radio.name === 'sunday') {
-                    radio.addEventListener('change', updateCompliance);
-                }
-            });
-            updateCompliance(); // Initial check on load
 
+            // Control Assessment listeners
+            const controlRadioButtons = document.querySelectorAll('#tracking input[type="radio"][name^="symptom_q"]');
+            controlRadioButtons.forEach(radio => {
+                radio.addEventListener('change', updateControlAssessment);
+            });
         });
  </script>
  </body>
